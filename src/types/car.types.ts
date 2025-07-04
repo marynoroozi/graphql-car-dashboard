@@ -7,6 +7,9 @@ export interface Car {
   mobile: string;
   tablet: string;
   desktop: string;
+  description?: string;
+  price?: number;
+  mileage?: number;
 }
 
 export interface CarsData {
@@ -21,7 +24,7 @@ export interface CarFilters {
 }
 
 export interface SortOptions {
-  sortBy: "make" | "model" | "year";
+  sortBy: "make" | "model" | "year" | "price";
   sortOrder: "asc" | "desc";
 }
 
@@ -33,6 +36,9 @@ export interface CarInput {
   mobile: string;
   tablet: string;
   desktop: string;
+  description?: string;
+  price?: number;
+  mileage?: number;
 }
 
 export interface AddCarResponse {
