@@ -11,6 +11,9 @@ export const GET_CARS = gql`
       mobile
       tablet
       desktop
+      description
+      price
+      mileage
     }
   }
 `;
@@ -26,6 +29,9 @@ export const GET_CAR_BY_ID = gql`
       mobile
       tablet
       desktop
+      description
+      price
+      mileage
     }
   }
 `;
@@ -46,6 +52,9 @@ export const GET_CARS_FILTERED = gql`
       mobile
       tablet
       desktop
+      description
+      price
+      mileage
     }
   }
 `;
@@ -64,6 +73,9 @@ export const ADD_CAR = gql`
         mobile
         tablet
         desktop
+        description
+        price
+        mileage
       }
     }
   }
