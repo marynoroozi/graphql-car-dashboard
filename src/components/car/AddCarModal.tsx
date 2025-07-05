@@ -165,9 +165,7 @@ export default function AddCarModal({ open, onClose }: AddCarModalProps) {
                     required
                     label="Make"
                     error={!!errors.make}
-                    helperText={
-                      errors.make?.message || "e.g., Audi, BMW, Mercedes"
-                    }
+                    helperText={errors.make?.message || "e.g., Audi"}
                     autoComplete="off"
                   />
                 )}
@@ -185,9 +183,7 @@ export default function AddCarModal({ open, onClose }: AddCarModalProps) {
                     required
                     label="Model"
                     error={!!errors.model}
-                    helperText={
-                      errors.model?.message || "e.g., A4, X5, C-Class"
-                    }
+                    helperText={errors.model?.message || "e.g., A4, Q5, A6"}
                     autoComplete="off"
                   />
                 )}
