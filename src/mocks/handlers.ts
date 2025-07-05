@@ -1,6 +1,7 @@
 import { graphql, HttpResponse } from "msw";
+import type { CarInput, CarsData } from "../types";
 
-const carList = [
+const initialCarList = [
   {
     id: "1",
     make: "Audi",
@@ -54,16 +55,50 @@ const carList = [
   },
 ];
 
+// Storage key for localStorage
+const STORAGE_KEY = "car-assessment-data";
+
+// Get cars from localStorage or use initial data
+const getCarList = () => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (error) {
+    console.warn("Error reading from localStorage:", error);
+  }
+
+  // First time - save initial data to localStorage
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(initialCarList));
+  return initialCarList;
+};
+
+// Save cars to localStorage
+const saveCarList = (cars: CarsData) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cars));
+  } catch (error) {
+    console.warn("Error saving to localStorage:", error);
+  }
+};
+
+// Get current car list from localStorage
+let carList = getCarList();
+
 export const handlers = [
   // Get all cars
   graphql.query("GetCars", () => {
+    // Always get fresh data from localStorage
+    carList = getCarList();
     return HttpResponse.json({ data: { cars: carList } });
   }),
 
   // Get single car by ID
   graphql.query("GetCarById", ({ variables }) => {
     const { id } = variables as { id: string };
-    const car = carList.find((car) => car.id === id);
+    carList = getCarList();
+    const car = carList.find((car: any) => car.id === id);
 
     if (!car) {
       return HttpResponse.json(
@@ -86,26 +121,27 @@ export const handlers = [
       color?: string;
     };
 
+    carList = getCarList();
     let filteredCars = carList;
 
     if (make) {
-      filteredCars = filteredCars.filter((car) =>
+      filteredCars = filteredCars.filter((car: any) =>
         car.make.toLowerCase().includes(make.toLowerCase())
       );
     }
 
     if (model) {
-      filteredCars = filteredCars.filter((car) =>
+      filteredCars = filteredCars.filter((car: any) =>
         car.model.toLowerCase().includes(model.toLowerCase())
       );
     }
 
     if (year) {
-      filteredCars = filteredCars.filter((car) => car.year === year);
+      filteredCars = filteredCars.filter((car: any) => car.year === year);
     }
 
     if (color) {
-      filteredCars = filteredCars.filter((car) =>
+      filteredCars = filteredCars.filter((car: any) =>
         car.color.toLowerCase().includes(color.toLowerCase())
       );
     }
@@ -115,10 +151,13 @@ export const handlers = [
 
   // Add new car
   graphql.mutation("AddCar", ({ variables }) => {
-    const { input } = variables as { input: any };
+    const { input } = variables as { input: CarInput };
+
+    // Get current list
+    carList = getCarList();
 
     const newCar = {
-      id: (carList.length + 1).toString(),
+      id: `car-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`, // Unique ID
       ...input,
       mobile:
         input.mobile || "https://via.placeholder.com/300x200?text=No+Image",
@@ -129,6 +168,9 @@ export const handlers = [
     };
 
     carList.push(newCar);
+
+    // Save to localStorage
+    saveCarList(carList);
 
     return HttpResponse.json({
       data: {
