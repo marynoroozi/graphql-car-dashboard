@@ -161,7 +161,7 @@ export default function CarFilters({
         </Box>
 
         {/* Make Filter */}
-        <Box sx={styles.filter.sortField}>
+        <Box sx={styles.filter.makeField}>
           <FormControl fullWidth>
             <InputLabel>Make</InputLabel>
             <Select

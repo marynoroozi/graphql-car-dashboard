@@ -240,6 +240,12 @@ export const filterStyles = {
     minWidth: 150,
   } as const,
 
+  makeField: {
+    flex: { xs: "1 1 100%", md: "1 1 33%" },
+    paddingBottom: { xs: 0, md: "1.46rem" },
+    minWidth: 150,
+  } as const,
+
   sortButton: {
     flex: { xs: "1 1 100%", md: "0 0 auto" },
     minWidth: 120,
