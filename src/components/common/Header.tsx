@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,11 +12,21 @@ import {
 } from "@mui/material";
 import { Add as AddIcon, DirectionsCar as CarIcon } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
+import AddCarModal from "../car/AddCarModal";
 
 export default function Header() {
+  const [isAddCarModalOpen, setIsAddCarModalOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const location = useLocation();
+
+  const handleOpenAddCarModal = () => {
+    setIsAddCarModalOpen(true);
+  };
+
+  const handleCloseAddCarModal = () => {
+    setIsAddCarModalOpen(false);
+  };
 
   return (
     <>
@@ -58,6 +69,7 @@ export default function Header() {
                 variant="contained"
                 color="secondary"
                 startIcon={!isMobile ? <AddIcon /> : undefined}
+                onClick={handleOpenAddCarModal}
                 sx={{
                   backgroundColor: "rgba(255, 255, 255, 0.1)",
                   "&:hover": {
@@ -71,6 +83,8 @@ export default function Header() {
           </Toolbar>
         </Container>
       </AppBar>
+
+      <AddCarModal open={isAddCarModalOpen} onClose={handleCloseAddCarModal} />
     </>
   );
 }
