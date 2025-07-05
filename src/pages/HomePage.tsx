@@ -1,10 +1,30 @@
 import { Container, Typography, Box, Fade } from "@mui/material";
 import CarList from "../components/car/CarList";
+import CarFilters from "../components/car/CarFilters";
 import { useCars } from "../hooks/useCars";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 
 export default function HomePage() {
-  const { cars, loading, error } = useCars();
+  const {
+    cars,
+    loading,
+    error,
+    searchTerm,
+    setSearchTerm,
+    yearFilter,
+    setYearFilter,
+    colorFilter,
+    setColorFilter,
+    makeFilter,
+    setMakeFilter,
+    sortBy,
+    setSortBy,
+    sortOrder,
+    setSortOrder,
+    availableYears,
+    availableColors,
+    availableMakes,
+  } = useCars();
 
   if (loading) {
     return <LoadingSpinner message="Loading cars..." />;
@@ -51,6 +71,25 @@ export default function HomePage() {
               find your perfect car.
             </Typography>
           </Box>
+
+          <CarFilters
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            yearFilter={yearFilter}
+            onYearFilterChange={setYearFilter}
+            colorFilter={colorFilter}
+            onColorFilterChange={setColorFilter}
+            makeFilter={makeFilter}
+            onMakeFilterChange={setMakeFilter}
+            sortBy={sortBy}
+            onSortByChange={setSortBy}
+            sortOrder={sortOrder}
+            onSortOrderChange={setSortOrder}
+            totalCars={cars.length}
+            availableYears={availableYears}
+            availableColors={availableColors}
+            availableMakes={availableMakes}
+          />
 
           <CarList cars={cars} />
         </Box>
