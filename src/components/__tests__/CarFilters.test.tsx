@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import CarFilters from "../CarFilters";
+import CarFilters from "../car/CarFilters";
 import { vi } from "vitest";
 
 const defaultProps = {

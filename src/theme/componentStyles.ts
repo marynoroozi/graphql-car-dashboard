@@ -86,17 +86,6 @@ export const layoutStyles = {
     py: 3,
   } as const,
 
-  toolbar: {
-    px: { xs: 0 },
-  } as const,
-
-  brandLink: {
-    flexGrow: 1,
-    textDecoration: "none",
-    color: "inherit",
-    fontWeight: 600,
-  } as const,
-
   headerActions: {
     display: "flex",
     alignItems: "center",
@@ -108,6 +97,37 @@ export const layoutStyles = {
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, 0.2)",
     },
+  } as const,
+
+  footerContainerBox: {
+    py: 3,
+    px: 2,
+    mt: "auto",
+    backgroundColor: (theme: Theme) =>
+      theme.palette.mode === "light"
+        ? theme.palette.grey[100]
+        : theme.palette.grey[800],
+  } as const,
+
+  footerTypoBox: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: 2,
+  } as const,
+
+  headerToolbar: {
+    px: { xs: 0 },
+    display: "flex",
+    justifyContent: "space-between",
+  } as const,
+
+  headerTitle: {
+    flexGrow: 1,
+    textDecoration: "none",
+    color: "inherit",
+    fontWeight: 600,
   } as const,
 };
 

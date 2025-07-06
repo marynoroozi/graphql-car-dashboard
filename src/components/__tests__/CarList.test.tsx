@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import CarList from "../CarList";
-import type { Car } from "../../../types/car.types";
+import CarList from "../car/CarList";
+import type { Car } from "../../types/car.types";
 import { vi } from "vitest";
 
 // Mock CarCard to avoid rendering its internals
-vi.mock("../CarCard", () => ({
+vi.mock("../car/CarCard", () => ({
   default: ({ car }: { car: Car }) => (
     <div data-testid="car-card">
       {car.make} {car.model}

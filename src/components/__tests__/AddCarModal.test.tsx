@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import AddCarModal from "../AddCarModal";
+import AddCarModal from "../car/AddCarModal";
 import { MockedProvider } from "@apollo/client/testing";
 import { vi } from "vitest";
 
-vi.mock("../../theme/componentStyles", () => ({
+vi.mock("../theme/componentStyles", () => ({
   modalStyles: {
     dialogPaper: {},
     dialogTitle: {},

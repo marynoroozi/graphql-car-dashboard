@@ -6,12 +6,16 @@ import {
   DialogContent,
   DialogActions,
   Typography,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { Restore as RestoreIcon } from "@mui/icons-material";
 import toast from "react-hot-toast";
 
 export default function ResetDataButton() {
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleReset = () => {
     localStorage.removeItem("car-assessment-data");
@@ -27,11 +31,11 @@ export default function ResetDataButton() {
       <Button
         variant="contained"
         color="warning"
-        startIcon={<RestoreIcon />}
+        startIcon={!isMobile ? <RestoreIcon /> : undefined}
         onClick={() => setOpen(true)}
         sx={{ ml: 1 }}
       >
-        Reset Data
+        {isMobile ? <RestoreIcon /> : "Reset Data"}
       </Button>
 
       <Dialog open={open} onClose={() => setOpen(false)}>

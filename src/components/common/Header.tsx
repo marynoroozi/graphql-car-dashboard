@@ -14,6 +14,7 @@ import { Add as AddIcon, DirectionsCar as CarIcon } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
 import AddCarModal from "../car/AddCarModal";
 import ResetDataButton from "./ResetDataButton";
+import { layoutStyles } from "../../theme/componentStyles";
 
 export default function Header() {
   const [isAddCarModalOpen, setIsAddCarModalOpen] = useState(false);
@@ -33,7 +34,7 @@ export default function Header() {
     <>
       <AppBar position="sticky" elevation={2}>
         <Container maxWidth="xl">
-          <Toolbar sx={{ px: { xs: 0 } }}>
+          <Toolbar sx={layoutStyles.headerToolbar}>
             <IconButton
               edge="start"
               color="inherit"
@@ -45,21 +46,18 @@ export default function Header() {
               <CarIcon />
             </IconButton>
 
-            <Typography
-              variant="h6"
-              component={Link}
-              to="/"
-              sx={{
-                flexGrow: 1,
-                textDecoration: "none",
-                color: "inherit",
-                fontWeight: 600,
-              }}
-            >
-              Car Assessment Dashboard
-            </Typography>
+            {!isMobile && (
+              <Typography
+                variant="h6"
+                component={Link}
+                to="/"
+                sx={layoutStyles.headerTitle}
+              >
+                Car Assessment Dashboard
+              </Typography>
+            )}
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box sx={layoutStyles.headerActions}>
               {location.pathname !== "/" && (
                 <Button color="inherit" component={Link} to="/" sx={{ mr: 1 }}>
                   Home
