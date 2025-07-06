@@ -62,21 +62,9 @@ export const modalStyles = {
     pb: 1,
   } as const,
 
-  stepperContainer: {
-    mb: 4,
-  } as const,
-
-  stepContent: {
-    minHeight: 300,
-  } as const,
-
   dialogActions: {
     px: 3,
     pb: 3,
-  } as const,
-
-  actionSpacer: {
-    flex: 1,
   } as const,
 };
 

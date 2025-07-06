@@ -31,6 +31,7 @@ import {
   carValidationSchema,
   type CarFormData,
 } from "../../types/car.validation";
+import { modalStyles } from "../../theme/componentStyles";
 
 interface AddCarModalProps {
   open: boolean;
@@ -92,8 +93,6 @@ export default function AddCarModal({ open, onClose }: AddCarModalProps) {
   };
 
   const handleNext = async () => {
-    console.log("Next button clicked, step:", activeStep);
-
     const fieldsToValidate = getStepFields(activeStep);
     const isStepValid = await trigger(fieldsToValidate);
 
@@ -395,16 +394,9 @@ export default function AddCarModal({ open, onClose }: AddCarModalProps) {
       onClose={handleClose}
       maxWidth="md"
       fullWidth
-      PaperProps={{ sx: { borderRadius: 3 } }}
+      PaperProps={{ sx: { ...modalStyles.dialogPaper } }}
     >
-      <DialogTitle
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          pb: 1,
-        }}
-      >
+      <DialogTitle sx={modalStyles.dialogTitle}>
         <Typography variant="h5" component="div" sx={{ fontWeight: 600 }}>
           Add New Car
         </Typography>
@@ -432,7 +424,7 @@ export default function AddCarModal({ open, onClose }: AddCarModalProps) {
         </Fade>
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, pb: 3 }}>
+      <DialogActions sx={modalStyles.dialogActions}>
         <Button
           type="button"
           onClick={handleBack}
