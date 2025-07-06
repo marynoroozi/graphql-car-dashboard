@@ -194,13 +194,46 @@ export const pageStyles = {
     py: 8,
     color: "text.secondary",
   } as const,
+
+  notFoundPageContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "60vh",
+  } as const,
+
+  notFoundPagePaper: {
+    p: 6,
+    textAlign: "center",
+    borderRadius: 3,
+  } as const,
+
+  errorIconStyles: {
+    fontSize: 120,
+    color: "text.secondary",
+    mb: 2,
+  } as const,
+
+  notFoundPageHeading: {
+    fontWeight: 600,
+    color: "primary.main",
+  } as const,
+
+  notFoundPageDescription: {
+    mb: 4,
+    maxWidth: 400,
+    mx: "auto",
+  } as const,
+
+  notFoundPageBox: {
+    display: "flex",
+    gap: 2,
+    justifyContent: "center",
+    flexWrap: "wrap",
+  } as const,
 };
 
 export const detailPageStyles = {
-  backButton: {
-    mb: 3,
-  } as const,
-
   detailPaper: {
     overflow: "hidden",
     borderRadius: 3,
@@ -210,10 +243,6 @@ export const detailPageStyles = {
     width: "100%",
     height: { xs: 300, md: 400 },
     objectFit: "cover",
-  } as const,
-
-  detailContent: {
-    p: 4,
   } as const,
 
   chipContainer: {
@@ -232,14 +261,6 @@ export const detailPageStyles = {
   actionButton: {
     flexGrow: 1,
     minWidth: 150,
-  } as const,
-
-  specsSection: {
-    mt: 4,
-  } as const,
-
-  specsGrid: {
-    spacing: 3,
   } as const,
 };
 

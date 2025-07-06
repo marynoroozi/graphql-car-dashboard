@@ -3,6 +3,7 @@ import CarList from "../components/car/CarList";
 import CarFilters from "../components/car/CarFilters";
 import { useCars } from "../hooks/useCars";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import { pageStyles } from "../theme/componentStyles";
 
 export default function HomePage() {
   const {
@@ -26,13 +27,7 @@ export default function HomePage() {
   if (error) {
     return (
       <Container maxWidth="xl">
-        <Box
-          sx={{
-            py: 4,
-            textAlign: "center",
-            color: "error.main",
-          }}
-        >
+        <Box sx={pageStyles.errorContainer}>
           <Typography variant="h5" gutterBottom>
             Error loading cars
           </Typography>
@@ -46,7 +41,7 @@ export default function HomePage() {
     <Container maxWidth="xl">
       <Fade in timeout={500}>
         <Box>
-          <Box sx={{ mb: 4, textAlign: "center" }}>
+          <Box sx={pageStyles.homePageHeader}>
             <Typography
               variant="h4"
               component="h1"
@@ -58,7 +53,7 @@ export default function HomePage() {
             <Typography
               variant="subtitle1"
               color="text.secondary"
-              sx={{ maxWidth: 600, mx: "auto" }}
+              sx={pageStyles.homePageSubtitle}
             >
               Browse our collection of premium vehicles. Filter, search, and
               find your perfect car.

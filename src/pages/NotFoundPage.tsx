@@ -4,39 +4,20 @@ import {
   Home as HomeIcon,
   ErrorOutline as ErrorIcon,
 } from "@mui/icons-material";
+import { pageStyles } from "../theme/componentStyles";
 
 export default function NotFoundPage() {
   return (
     <Container maxWidth="md">
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "60vh",
-        }}
-      >
-        <Paper
-          elevation={3}
-          sx={{
-            p: 6,
-            textAlign: "center",
-            borderRadius: 3,
-          }}
-        >
-          <ErrorIcon
-            sx={{
-              fontSize: 120,
-              color: "text.secondary",
-              mb: 2,
-            }}
-          />
+      <Box sx={pageStyles.notFoundPageContainer}>
+        <Paper elevation={3} sx={pageStyles.notFoundPagePaper}>
+          <ErrorIcon sx={pageStyles.errorIconStyles} />
 
           <Typography
             variant="h2"
             component="h1"
             gutterBottom
-            sx={{ fontWeight: 600, color: "primary.main" }}
+            sx={pageStyles.notFoundPageHeading}
           >
             404
           </Typography>
@@ -49,20 +30,13 @@ export default function NotFoundPage() {
             variant="body1"
             color="text.secondary"
             paragraph
-            sx={{ mb: 4, maxWidth: 400, mx: "auto" }}
+            sx={pageStyles.notFoundPageDescription}
           >
             The page you're looking for doesn't exist. It might have been moved,
             deleted, or you entered the wrong URL.
           </Typography>
 
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              justifyContent: "center",
-              flexWrap: "wrap",
-            }}
-          >
+          <Box sx={pageStyles.notFoundPageBox}>
             <Button
               variant="contained"
               component={Link}

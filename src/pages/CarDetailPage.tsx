@@ -22,6 +22,7 @@ import {
 import { GET_CAR_BY_ID } from "../graphql/queries";
 import type { Car } from "../types/car.types";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import { detailPageStyles, pageStyles } from "../theme/componentStyles";
 
 export default function CarDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -46,7 +47,7 @@ export default function CarDetailPage() {
   if (error || !data?.car) {
     return (
       <Container maxWidth="lg">
-        <Box sx={{ py: 4, textAlign: "center" }}>
+        <Box sx={pageStyles.errorContainer}>
           <Typography variant="h5" color="error" gutterBottom>
             Car not found
           </Typography>
@@ -83,18 +84,14 @@ export default function CarDetailPage() {
             Back to Cars
           </Button>
 
-          <Paper elevation={3} sx={{ overflow: "hidden", borderRadius: 3 }}>
+          <Paper elevation={3} sx={detailPageStyles.detailPaper}>
             <Grid container>
               <Grid item xs={12} md={6}>
                 <Box
                   component="img"
                   src={getImageUrl()}
                   alt={`${car.make} ${car.model} ${car.year}`}
-                  sx={{
-                    width: "100%",
-                    height: { xs: 300, md: 400 },
-                    objectFit: "cover",
-                  }}
+                  sx={detailPageStyles.carImage}
                 />
               </Grid>
 
@@ -109,9 +106,7 @@ export default function CarDetailPage() {
                     {car.make} {car.model}
                   </Typography>
 
-                  <Box
-                    sx={{ mb: 3, display: "flex", gap: 1, flexWrap: "wrap" }}
-                  >
+                  <Box sx={detailPageStyles.chipContainer}>
                     <Chip
                       icon={<CalendarIcon />}
                       label={car.year}
@@ -152,18 +147,18 @@ export default function CarDetailPage() {
                     </Box>
                   )}
 
-                  <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                  <Box sx={detailPageStyles.actionButtonsContainer}>
                     <Button
                       variant="contained"
                       size="large"
-                      sx={{ flexGrow: 1, minWidth: 150 }}
+                      sx={detailPageStyles.actionButton}
                     >
                       Contact Seller
                     </Button>
                     <Button
                       variant="outlined"
                       size="large"
-                      sx={{ flexGrow: 1, minWidth: 150 }}
+                      sx={detailPageStyles.actionButton}
                     >
                       Save to Favorites
                     </Button>
