@@ -16,6 +16,7 @@ import {
   Clear as ClearIcon,
   FilterList as FilterIcon,
 } from "@mui/icons-material";
+import { useMemo } from "react";
 import { getComponentStyles } from "../../theme/componentStyles";
 
 interface CarFiltersProps {
@@ -68,8 +69,73 @@ export default function CarFilters({
     onMakeFilterChange("");
   };
 
-  const hasActiveFilters =
-    searchTerm || yearFilter || colorFilter || makeFilter;
+  type FilterChip = { label: string; onDelete: () => void };
+
+  const filterChips: FilterChip[] = useMemo(
+    () =>
+      [
+        searchTerm
+          ? {
+              label: `Model: ${searchTerm}`,
+              onDelete: () => onSearchChange(""),
+            }
+          : null,
+        yearFilter
+          ? {
+              label: `Year: ${yearFilter}`,
+              onDelete: () => onYearFilterChange(null),
+            }
+          : null,
+        colorFilter
+          ? {
+              label: `Color: ${colorFilter}`,
+              onDelete: () => onColorFilterChange(""),
+            }
+          : null,
+        makeFilter
+          ? {
+              label: `Make: ${makeFilter}`,
+              onDelete: () => onMakeFilterChange(""),
+            }
+          : null,
+      ].filter((chip): chip is FilterChip => chip !== null),
+    [
+      searchTerm,
+      yearFilter,
+      colorFilter,
+      makeFilter,
+      onSearchChange,
+      onYearFilterChange,
+      onColorFilterChange,
+      onMakeFilterChange,
+    ]
+  );
+
+  const hasActiveFilters = filterChips.length > 0;
+
+  const selectOptions = [
+    {
+      label: "Make",
+      value: makeFilter,
+      onChange: (v: string) => onMakeFilterChange(v),
+      options: availableMakes,
+      allLabel: "All Makes",
+    },
+    {
+      label: "Year",
+      value: yearFilter || "",
+      onChange: (v: string) => onYearFilterChange(v ? Number(v) : null),
+      options: availableYears,
+      allLabel: "All Years",
+    },
+    {
+      label: "Color",
+      value: colorFilter,
+      onChange: (v: string) => onColorFilterChange(v),
+      options: availableColors,
+      allLabel: "All Colors",
+    },
+  ];
 
   return (
     <Paper
@@ -78,18 +144,11 @@ export default function CarFilters({
       component="section"
       aria-labelledby="filters-heading"
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 3,
-        }}
-      >
+      <Box sx={styles.filter.filterBox}>
         <Typography
           variant="h6"
           id="filters-heading"
-          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+          sx={styles.filter.filterTypography}
         >
           <FilterIcon />
           Filter & Sort Cars ({totalCars} results)
@@ -109,39 +168,17 @@ export default function CarFilters({
 
       {/* Active Filters */}
       {hasActiveFilters && (
-        <Box sx={{ mb: 2, display: "flex", gap: 1, flexWrap: "wrap" }}>
-          {searchTerm && (
+        <Box sx={styles.filter.filterChipBox}>
+          {filterChips.map((chip) => (
             <Chip
-              label={`Model: ${searchTerm}`}
-              onDelete={() => onSearchChange("")}
+              key={chip.label}
+              label={chip.label}
+              onDelete={chip.onDelete}
               color="primary"
               variant="outlined"
+              sx={{ mr: 1 }}
             />
-          )}
-          {yearFilter && (
-            <Chip
-              label={`Year: ${yearFilter}`}
-              onDelete={() => onYearFilterChange(null)}
-              color="primary"
-              variant="outlined"
-            />
-          )}
-          {colorFilter && (
-            <Chip
-              label={`Color: ${colorFilter}`}
-              onDelete={() => onColorFilterChange("")}
-              color="primary"
-              variant="outlined"
-            />
-          )}
-          {makeFilter && (
-            <Chip
-              label={`Make: ${makeFilter}`}
-              onDelete={() => onMakeFilterChange("")}
-              color="primary"
-              variant="outlined"
-            />
-          )}
+          ))}
         </Box>
       )}
 
@@ -160,72 +197,41 @@ export default function CarFilters({
           />
         </Box>
 
-        {/* Make Filter */}
-        <Box sx={styles.filter.makeField}>
-          <FormControl fullWidth>
-            <InputLabel>Make</InputLabel>
-            <Select
-              value={makeFilter}
-              label="Make"
-              onChange={(e) => onMakeFilterChange(e.target.value)}
-            >
-              <MenuItem value="">All Makes</MenuItem>
-              {availableMakes.map((make) => (
-                <MenuItem key={make} value={make}>
-                  {make}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-
-        {/* Year Filter */}
-        <Box sx={styles.filter.sortField}>
-          <FormControl fullWidth>
-            <InputLabel>Year</InputLabel>
-            <Select
-              value={yearFilter || ""}
-              label="Year"
-              onChange={(e) =>
-                onYearFilterChange(
-                  e.target.value ? Number(e.target.value) : null
-                )
-              }
-            >
-              <MenuItem value="">All Years</MenuItem>
-              {availableYears.map((year) => (
-                <MenuItem key={year} value={year}>
-                  {year}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-
-        {/* Color Filter */}
-        <Box sx={styles.filter.sortField}>
-          <FormControl fullWidth>
-            <InputLabel>Color</InputLabel>
-            <Select
-              value={colorFilter}
-              label="Color"
-              onChange={(e) => onColorFilterChange(e.target.value)}
-            >
-              <MenuItem value="">All Colors</MenuItem>
-              {availableColors.map((color) => (
-                <MenuItem key={color} value={color}>
-                  {color}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
+        {/* Select Filters */}
+        {selectOptions.map((opt) => (
+          <Box
+            sx={
+              opt.label === "Make"
+                ? styles.filter.makeField
+                : styles.filter.sortField
+            }
+            key={opt.label}
+          >
+            <FormControl fullWidth>
+              <InputLabel id={`${opt.label}-label`}>{opt.label}</InputLabel>
+              <Select
+                labelId={`${opt.label}-label`}
+                value={opt.value}
+                label={opt.label}
+                onChange={(e) => opt.onChange(e.target.value as any)}
+              >
+                <MenuItem value="">{opt.allLabel}</MenuItem>
+                {opt.options.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+        ))}
 
         {/* Sort By */}
         <Box sx={styles.filter.sortField}>
           <FormControl fullWidth>
-            <InputLabel>Sort By</InputLabel>
+            <InputLabel id="sortby-label">Sort By</InputLabel>
             <Select
+              labelId="sortby-label"
               value={sortBy}
               label="Sort By"
               onChange={(e) =>

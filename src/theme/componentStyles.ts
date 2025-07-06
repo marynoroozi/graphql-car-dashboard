@@ -230,7 +230,7 @@ export const filterStyles = {
 
   makeField: {
     flex: { xs: "1 1 100%", md: "1 1 33%" },
-    paddingBottom: { xs: 0, md: "1.46rem" },
+    paddingBottom: { xs: 0, md: "1.43rem" },
     minWidth: 150,
   } as const,
 
@@ -245,6 +245,26 @@ export const filterStyles = {
     borderRadius: 1,
     width: "100%",
     height: 56,
+  } as const,
+
+  filterBox: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    mb: 3,
+  } as const,
+
+  filterTypography: {
+    display: "flex",
+    alignItems: "center",
+    gap: 1,
+  } as const,
+
+  filterChipBox: {
+    mb: 2,
+    display: "flex",
+    gap: 1,
+    flexWrap: "wrap",
   } as const,
 };
 
