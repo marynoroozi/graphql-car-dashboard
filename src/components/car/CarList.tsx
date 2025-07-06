@@ -1,6 +1,7 @@
 import { Box, Typography, Fade, Zoom } from "@mui/material";
 import type { Car } from "../../types/car.types";
 import CarCard from "./CarCard";
+import { cardStyles } from "../../theme/componentStyles";
 
 interface CarListProps {
   cars: Car[];
@@ -10,13 +11,7 @@ export default function CarList({ cars }: CarListProps) {
   if (cars.length === 0) {
     return (
       <Fade in timeout={500}>
-        <Box
-          sx={{
-            textAlign: "center",
-            py: 8,
-            color: "text.secondary",
-          }}
-        >
+        <Box sx={cardStyles.carCardListBox}>
           <Typography variant="h6" gutterBottom>
             No cars found
           </Typography>

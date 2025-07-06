@@ -48,6 +48,12 @@ export const cardStyles = {
       color: "error.main",
     },
   } as const,
+
+  carCardListBox: {
+    textAlign: "center",
+    py: 8,
+    color: "text.secondary",
+  } as const,
 };
 
 export const modalStyles = {
