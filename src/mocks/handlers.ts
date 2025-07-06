@@ -1,5 +1,5 @@
 import { graphql, HttpResponse } from "msw";
-import type { CarInput, CarsData } from "../types";
+import type { Car, CarInput, CarsData } from "../types";
 
 const initialCarList = [
   {
@@ -98,7 +98,7 @@ export const handlers = [
   graphql.query("GetCarById", ({ variables }) => {
     const { id } = variables as { id: string };
     carList = getCarList();
-    const car = carList.find((car: any) => car.id === id);
+    const car = carList.find((car: Car) => car.id === id);
 
     if (!car) {
       return HttpResponse.json(
@@ -125,23 +125,23 @@ export const handlers = [
     let filteredCars = carList;
 
     if (make) {
-      filteredCars = filteredCars.filter((car: any) =>
+      filteredCars = filteredCars.filter((car: Car) =>
         car.make.toLowerCase().includes(make.toLowerCase())
       );
     }
 
     if (model) {
-      filteredCars = filteredCars.filter((car: any) =>
+      filteredCars = filteredCars.filter((car: Car) =>
         car.model.toLowerCase().includes(model.toLowerCase())
       );
     }
 
     if (year) {
-      filteredCars = filteredCars.filter((car: any) => car.year === year);
+      filteredCars = filteredCars.filter((car: Car) => car.year === year);
     }
 
     if (color) {
-      filteredCars = filteredCars.filter((car: any) =>
+      filteredCars = filteredCars.filter((car: Car) =>
         car.color.toLowerCase().includes(color.toLowerCase())
       );
     }
