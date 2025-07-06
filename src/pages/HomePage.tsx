@@ -9,21 +9,14 @@ export default function HomePage() {
     cars,
     loading,
     error,
-    searchTerm,
-    setSearchTerm,
-    yearFilter,
-    setYearFilter,
-    colorFilter,
-    setColorFilter,
-    makeFilter,
-    setMakeFilter,
-    sortBy,
-    setSortBy,
-    sortOrder,
-    setSortOrder,
+    filters,
+    setFilter,
+    clearAllFilters,
+    toggleSortOrder,
     availableYears,
     availableColors,
     availableMakes,
+    totalResults,
   } = useCars();
 
   if (loading) {
@@ -73,22 +66,24 @@ export default function HomePage() {
           </Box>
 
           <CarFilters
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            yearFilter={yearFilter}
-            onYearFilterChange={setYearFilter}
-            colorFilter={colorFilter}
-            onColorFilterChange={setColorFilter}
-            makeFilter={makeFilter}
-            onMakeFilterChange={setMakeFilter}
-            sortBy={sortBy}
-            onSortByChange={setSortBy}
-            sortOrder={sortOrder}
-            onSortOrderChange={setSortOrder}
-            totalCars={cars.length}
+            searchTerm={filters.searchTerm}
+            onSearchChange={(value) => setFilter("searchTerm", value)}
+            yearFilter={filters.yearFilter}
+            onYearFilterChange={(value) => setFilter("yearFilter", value)}
+            colorFilter={filters.colorFilter}
+            onColorFilterChange={(value) => setFilter("colorFilter", value)}
+            makeFilter={filters.makeFilter}
+            onMakeFilterChange={(value) => setFilter("makeFilter", value)}
+            sortBy={filters.sortBy}
+            onSortByChange={(value) => setFilter("sortBy", value)}
+            sortOrder={filters.sortOrder}
+            onSortOrderChange={(value) => setFilter("sortOrder", value)}
+            totalCars={totalResults}
             availableYears={availableYears}
             availableColors={availableColors}
             availableMakes={availableMakes}
+            onClearAllFilters={clearAllFilters}
+            onToggleSortOrder={toggleSortOrder}
           />
 
           <CarList cars={cars} />

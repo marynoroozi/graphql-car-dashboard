@@ -36,6 +36,8 @@ interface CarFiltersProps {
   availableYears?: number[];
   availableColors?: string[];
   availableMakes?: string[];
+  onClearAllFilters?: () => void;
+  onToggleSortOrder?: () => void;
 }
 
 export default function CarFilters({
@@ -55,18 +57,29 @@ export default function CarFilters({
   availableYears = [],
   availableColors = [],
   availableMakes = [],
+  onClearAllFilters,
+  onToggleSortOrder,
 }: CarFiltersProps) {
   const styles = getComponentStyles();
 
   const toggleSortOrder = () => {
-    onSortOrderChange(sortOrder === "asc" ? "desc" : "asc");
+    if (onToggleSortOrder) {
+      onToggleSortOrder();
+    } else {
+      onSortOrderChange(sortOrder === "asc" ? "desc" : "asc");
+    }
   };
 
   const clearAllFilters = () => {
-    onSearchChange("");
-    onYearFilterChange(null);
-    onColorFilterChange("");
-    onMakeFilterChange("");
+    if (onClearAllFilters) {
+      onClearAllFilters();
+    } else {
+      // fallback
+      onSearchChange("");
+      onYearFilterChange(null);
+      onColorFilterChange("");
+      onMakeFilterChange("");
+    }
   };
 
   type FilterChip = { label: string; onDelete: () => void };
