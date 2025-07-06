@@ -23,11 +23,12 @@ export interface CarFilters {
   makeFilter: string;
 }
 
+export type SortBy = "make" | "model" | "year" | "price";
+export type SortOrder = "asc" | "desc";
 export interface SortOptions {
-  sortBy: "make" | "model" | "year" | "price";
-  sortOrder: "asc" | "desc";
+  sortBy: SortBy;
+  sortOrder: SortOrder;
 }
-
 export interface CarInput {
   make: string;
   model: string;
