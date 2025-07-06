@@ -129,20 +129,32 @@ export const layoutStyles = {
     color: "inherit",
     fontWeight: 600,
   } as const,
-};
 
-export const pageStyles = {
-  centeredContainer: {
+  loadingContainer: {
     display: "flex",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     minHeight: "50vh",
     gap: 2,
   } as const,
 
-  loadingContainer: {
+  loadingMessageBox: {
+    position: "absolute",
+    width: 1,
+    height: 1,
+    padding: 0,
+    margin: -1,
+    overflow: "hidden",
+    clip: "rect(0, 0, 0, 0)",
+    whiteSpace: "nowrap",
+    border: 0,
+  } as const,
+};
+
+export const pageStyles = {
+  centeredContainer: {
     display: "flex",
-    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     minHeight: "50vh",

@@ -1,4 +1,5 @@
 import { Box, CircularProgress, Typography, Fade } from "@mui/material";
+import { layoutStyles } from "../../theme/componentStyles";
 
 interface LoadingSpinnerProps {
   message?: string;
@@ -12,14 +13,7 @@ export default function LoadingSpinner({
   return (
     <Fade in timeout={300}>
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "50vh",
-          gap: 2,
-        }}
+        sx={layoutStyles.loadingContainer}
         role="status"
         aria-label={message}
       >
@@ -39,20 +33,7 @@ export default function LoadingSpinner({
           {message}
         </Typography>
 
-        <Box
-          component="span"
-          sx={{
-            position: "absolute",
-            width: 1,
-            height: 1,
-            padding: 0,
-            margin: -1,
-            overflow: "hidden",
-            clip: "rect(0, 0, 0, 0)",
-            whiteSpace: "nowrap",
-            border: 0,
-          }}
-        >
+        <Box component="span" sx={layoutStyles.loadingMessageBox}>
           {message}
         </Box>
       </Box>
