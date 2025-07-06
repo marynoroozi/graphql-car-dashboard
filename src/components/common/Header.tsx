@@ -13,6 +13,7 @@ import {
 import { Add as AddIcon, DirectionsCar as CarIcon } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
 import AddCarModal from "../car/AddCarModal";
+import ResetDataButton from "./ResetDataButton";
 
 export default function Header() {
   const [isAddCarModalOpen, setIsAddCarModalOpen] = useState(false);
@@ -67,18 +68,14 @@ export default function Header() {
 
               <Button
                 variant="contained"
-                color="secondary"
+                color="info"
                 startIcon={!isMobile ? <AddIcon /> : undefined}
                 onClick={handleOpenAddCarModal}
-                sx={{
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.2)",
-                  },
-                }}
               >
                 {isMobile ? <AddIcon /> : "Add Car"}
               </Button>
+
+              {process.env.NODE_ENV === "development" && <ResetDataButton />}
             </Box>
           </Toolbar>
         </Container>
