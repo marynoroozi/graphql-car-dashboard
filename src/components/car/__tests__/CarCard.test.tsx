@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { ThemeProvider, createTheme } from "@mui/material";
-import { CarCard } from "../CarCard";
-import type { Car } from "../../hooks/useCars";
+import CarCard from "../CarCard";
+import type { Car } from "../../../types/car.types";
 
 const theme = createTheme();
 
