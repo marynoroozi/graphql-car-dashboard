@@ -1,6 +1,7 @@
 import { useQuery, useApolloClient } from "@apollo/client";
 import { useMemo, useCallback, useState } from "react";
-import { ADD_CAR, GET_CARS } from "../graphql/queries";
+import { GET_CARS } from "../graphql/queries";
+import { ADD_CAR } from "../graphql/mutations";
 import type { Car, CarsData } from "../types/car.types";
 import { useCarFilters } from "./useCarFilters";
 

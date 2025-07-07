@@ -26,7 +26,8 @@ import { useForm, Controller, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
-import { ADD_CAR, GET_CARS } from "../../graphql/queries";
+import { GET_CARS } from "../../graphql/queries";
+import { ADD_CAR } from "../../graphql/mutations";
 import {
   carValidationSchema,
   type CarFormData,
