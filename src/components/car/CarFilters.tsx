@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   Box,
   TextField,
@@ -16,135 +17,59 @@ import {
   Clear as ClearIcon,
   FilterList as FilterIcon,
 } from "@mui/icons-material";
-import { useMemo } from "react";
+import { useCarFiltersContext } from "../../contexts/CarContext";
 import { getComponentStyles } from "../../theme/componentStyles";
 
-interface CarFiltersProps {
-  searchTerm: string;
-  onSearchChange: (value: string) => void;
-  yearFilter: number | null;
-  onYearFilterChange: (value: number | null) => void;
-  colorFilter: string;
-  onColorFilterChange: (value: string) => void;
-  makeFilter: string;
-  onMakeFilterChange: (value: string) => void;
-  sortBy: "make" | "model" | "year" | "price";
-  onSortByChange: (value: "make" | "model" | "year" | "price") => void;
-  sortOrder: "asc" | "desc";
-  onSortOrderChange: (value: "asc" | "desc") => void;
-  totalCars: number;
-  availableYears?: number[];
-  availableColors?: string[];
-  availableMakes?: string[];
-  onClearAllFilters?: () => void;
-  onToggleSortOrder?: () => void;
-}
-
-export default function CarFilters({
-  searchTerm,
-  onSearchChange,
-  yearFilter,
-  onYearFilterChange,
-  colorFilter,
-  onColorFilterChange,
-  makeFilter,
-  onMakeFilterChange,
-  sortBy,
-  onSortByChange,
-  sortOrder,
-  onSortOrderChange,
-  totalCars,
-  availableYears = [],
-  availableColors = [],
-  availableMakes = [],
-  onClearAllFilters,
-  onToggleSortOrder,
-}: CarFiltersProps) {
+export default function CarFilters() {
+  const {
+    filters,
+    setFilter,
+    clearAllFilters,
+    toggleSortOrder,
+    availableYears,
+    availableColors,
+    availableMakes,
+    hasActiveFilters,
+    activeFilters,
+    totalResults,
+  } = useCarFiltersContext();
   const styles = getComponentStyles();
 
-  const toggleSortOrder = () => {
-    if (onToggleSortOrder) {
-      onToggleSortOrder();
-    } else {
-      onSortOrderChange(sortOrder === "asc" ? "desc" : "asc");
-    }
-  };
-
-  const clearAllFilters = () => {
-    if (onClearAllFilters) {
-      onClearAllFilters();
-    } else {
-      // fallback
-      onSearchChange("");
-      onYearFilterChange(null);
-      onColorFilterChange("");
-      onMakeFilterChange("");
-    }
-  };
-
-  type FilterChip = { label: string; onDelete: () => void };
-
-  const filterChips: FilterChip[] = useMemo(
+  const filterChips = useMemo(
     () =>
-      [
-        searchTerm
-          ? {
-              label: `Model: ${searchTerm}`,
-              onDelete: () => onSearchChange(""),
-            }
-          : null,
-        yearFilter
-          ? {
-              label: `Year: ${yearFilter}`,
-              onDelete: () => onYearFilterChange(null),
-            }
-          : null,
-        colorFilter
-          ? {
-              label: `Color: ${colorFilter}`,
-              onDelete: () => onColorFilterChange(""),
-            }
-          : null,
-        makeFilter
-          ? {
-              label: `Make: ${makeFilter}`,
-              onDelete: () => onMakeFilterChange(""),
-            }
-          : null,
-      ].filter((chip): chip is FilterChip => chip !== null),
-    [
-      searchTerm,
-      yearFilter,
-      colorFilter,
-      makeFilter,
-      onSearchChange,
-      onYearFilterChange,
-      onColorFilterChange,
-      onMakeFilterChange,
-    ]
+      activeFilters.map((filter) => ({
+        key: filter.key,
+        label: `${filter.label}: ${filter.value}`,
+        onDelete: () => {
+          if (filter.key === "yearFilter") {
+            setFilter("yearFilter", null);
+          } else {
+            setFilter(filter.key, "");
+          }
+        },
+      })),
+    [activeFilters, setFilter]
   );
-
-  const hasActiveFilters = filterChips.length > 0;
 
   const selectOptions = [
     {
       label: "Make",
-      value: makeFilter,
-      onChange: (v: string) => onMakeFilterChange(v),
+      value: filters.makeFilter,
+      onChange: (v: string) => setFilter("makeFilter", v),
       options: availableMakes,
       allLabel: "All Makes",
     },
     {
       label: "Year",
-      value: yearFilter || "",
-      onChange: (v: string) => onYearFilterChange(v ? Number(v) : null),
+      value: filters.yearFilter || "",
+      onChange: (v: string) => setFilter("yearFilter", v ? Number(v) : null),
       options: availableYears,
       allLabel: "All Years",
     },
     {
       label: "Color",
-      value: colorFilter,
-      onChange: (v: string) => onColorFilterChange(v),
+      value: filters.colorFilter,
+      onChange: (v: string) => setFilter("colorFilter", v),
       options: availableColors,
       allLabel: "All Colors",
     },
@@ -164,7 +89,7 @@ export default function CarFilters({
           sx={styles.filter.filterTypography}
         >
           <FilterIcon />
-          Filter & Sort Cars ({totalCars} results)
+          Filter & Sort Cars ({totalResults} results)
         </Typography>
 
         {hasActiveFilters && (
@@ -202,8 +127,8 @@ export default function CarFilters({
             fullWidth
             label="Search by Model"
             variant="outlined"
-            value={searchTerm}
-            onChange={(e) => onSearchChange(e.target.value)}
+            value={filters.searchTerm}
+            onChange={(e) => setFilter("searchTerm", e.target.value)}
             placeholder="Type car model to search..."
             inputProps={{ "aria-describedby": "search-help" }}
             helperText="Search for cars by their model name"
@@ -245,10 +170,11 @@ export default function CarFilters({
             <InputLabel id="sortby-label">Sort By</InputLabel>
             <Select
               labelId="sortby-label"
-              value={sortBy}
+              value={filters.sortBy}
               label="Sort By"
               onChange={(e) =>
-                onSortByChange(
+                setFilter(
+                  "sortBy",
                   e.target.value as "make" | "model" | "year" | "price"
                 )
               }
@@ -268,15 +194,15 @@ export default function CarFilters({
             color="primary"
             sx={styles.filter.sortButtonInner}
             aria-label={`Sort order: ${
-              sortOrder === "asc" ? "Ascending" : "Descending"
+              filters.sortOrder === "asc" ? "Ascending" : "Descending"
             }. Click to toggle`}
             title={`Current sort order: ${
-              sortOrder === "asc" ? "Ascending" : "Descending"
+              filters.sortOrder === "asc" ? "Ascending" : "Descending"
             }`}
           >
             <SwapVertIcon />
             <Typography variant="caption" ml={1}>
-              {sortOrder.toUpperCase()}
+              {filters.sortOrder.toUpperCase()}
             </Typography>
           </IconButton>
         </Box>

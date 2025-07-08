@@ -1,13 +1,10 @@
 import { Box, Typography, Fade, Zoom } from "@mui/material";
-import type { Car } from "../../types/car.types";
+import { useCarData } from "../../contexts/CarContext";
 import CarCard from "./CarCard";
 import { cardStyles } from "../../theme/componentStyles";
 
-interface CarListProps {
-  cars: Car[];
-}
-
-export default function CarList({ cars }: CarListProps) {
+export default function CarList() {
+  const { cars } = useCarData();
   if (cars.length === 0) {
     return (
       <Fade in timeout={500}>
