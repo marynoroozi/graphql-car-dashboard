@@ -3,6 +3,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Toaster } from "react-hot-toast";
 import theme from "./theme";
+import { CarProvider } from "./contexts/CarContext";
 import Layout from "./components/common/Layout";
 import HomePage from "./pages/HomePage";
 import CarDetailPage from "./pages/CarDetailPage";
@@ -20,15 +21,17 @@ export default function App() {
       <CssBaseline />
       <ApolloProvider client={client}>
         <ErrorBoundary>
-          <Router>
-            <Layout>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/car/:id" element={<CarDetailPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </Layout>
-          </Router>
+          <CarProvider>
+            <Router>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/car/:id" element={<CarDetailPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Layout>
+            </Router>
+          </CarProvider>
 
           {/* Global Toast Notifications */}
           <Toaster

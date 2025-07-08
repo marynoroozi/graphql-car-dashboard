@@ -16,15 +16,16 @@ export interface CarsData {
   cars: Car[];
 }
 
+export type SortBy = "make" | "model" | "year" | "price";
+export type SortOrder = "asc" | "desc";
 export interface CarFilters {
   searchTerm: string;
   yearFilter: number | null;
   colorFilter: string;
   makeFilter: string;
+  sortBy: SortBy;
+  sortOrder: SortOrder;
 }
-
-export type SortBy = "make" | "model" | "year" | "price";
-export type SortOrder = "asc" | "desc";
 export interface SortOptions {
   sortBy: SortBy;
   sortOrder: SortOrder;
