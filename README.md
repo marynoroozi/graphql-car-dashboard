@@ -14,7 +14,7 @@ A modern, responsive car management application built with React, TypeScript, Ap
 
 ## 🚀 Live Demo
 
-👉 **[View Live Application]()**
+👉 **[View Live Application](https://codesandbox.io/p/github/marynoroozi/graphql-car-dashboard/main?import=true)**
 
 ## 🛠️ Tech Stack
 
@@ -24,7 +24,6 @@ A modern, responsive car management application built with React, TypeScript, Ap
 - **Forms:** React Hook Form + Yup validation
 - **Testing:** Vitest, React Testing Library
 - **Build:** Vite
-- **Deployment:** Vercel
 
 ## 📦 Installation
 
@@ -117,6 +116,15 @@ src/
 ## 🔧 Environment Variables
 
 No environment variables required - uses MSW for mock data.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+   
 
 ## 👨‍💻 Author
 
