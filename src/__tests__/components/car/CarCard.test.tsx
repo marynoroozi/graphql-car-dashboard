@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { MemoryRouter } from "react-router-dom";
-import CarCard from "..//car/CarCard";
-import type { Car } from "../../types/car.types";
+import CarCard from "../../../components/car/CarCard";
+import type { Car } from "../../../types/car.types";
 
 const theme = createTheme();
 

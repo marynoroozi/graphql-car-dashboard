@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import ErrorBoundary from "../common/ErrorBoundary";
+import ErrorBoundary from "../../../components/common/ErrorBoundary";
 
 function ProblemChild() {
   throw new Error("Test error!");
