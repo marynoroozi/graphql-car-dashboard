@@ -121,8 +121,8 @@ No environment variables required - uses MSW for mock data.
 ## 👨‍💻 Author
 
 **[Mary Noroozi]**
-- GitHub: [@yourusername](https://github.com/marynoroozi)
-- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/maryam-noroozi-/)
+- GitHub: [@marynoroozi](https://github.com/marynoroozi)
+- LinkedIn: [mary noroozi](https://www.linkedin.com/in/maryam-noroozi-/)
 
 ---
 

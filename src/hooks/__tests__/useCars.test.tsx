@@ -2,7 +2,8 @@ import { renderHook, act } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import React from "react";
 import { useCars } from "../useCars";
-import { GET_CARS, ADD_CAR } from "../../graphql/queries";
+import { GET_CARS } from "../../graphql/queries";
+import { ADD_CAR } from "../../graphql/mutations";
 
 const addCarVariables = {
   input: {
