@@ -1,24 +1,12 @@
 import { Container, Typography, Box, Fade } from "@mui/material";
 import CarList from "../components/car/CarList";
 import CarFilters from "../components/car/CarFilters";
-import { useCars } from "../hooks/useCars";
+import { useCarData } from "../contexts/CarContext";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { pageStyles } from "../theme/componentStyles";
 
 export default function HomePage() {
-  const {
-    cars,
-    loading,
-    error,
-    filters,
-    setFilter,
-    clearAllFilters,
-    toggleSortOrder,
-    availableYears,
-    availableColors,
-    availableMakes,
-    totalResults,
-  } = useCars();
+  const { loading, error } = useCarData();
 
   if (loading) {
     return <LoadingSpinner message="Loading cars..." />;
@@ -60,28 +48,9 @@ export default function HomePage() {
             </Typography>
           </Box>
 
-          <CarFilters
-            searchTerm={filters.searchTerm}
-            onSearchChange={(value) => setFilter("searchTerm", value)}
-            yearFilter={filters.yearFilter}
-            onYearFilterChange={(value) => setFilter("yearFilter", value)}
-            colorFilter={filters.colorFilter}
-            onColorFilterChange={(value) => setFilter("colorFilter", value)}
-            makeFilter={filters.makeFilter}
-            onMakeFilterChange={(value) => setFilter("makeFilter", value)}
-            sortBy={filters.sortBy}
-            onSortByChange={(value) => setFilter("sortBy", value)}
-            sortOrder={filters.sortOrder}
-            onSortOrderChange={(value) => setFilter("sortOrder", value)}
-            totalCars={totalResults}
-            availableYears={availableYears}
-            availableColors={availableColors}
-            availableMakes={availableMakes}
-            onClearAllFilters={clearAllFilters}
-            onToggleSortOrder={toggleSortOrder}
-          />
+          <CarFilters />
 
-          <CarList cars={cars} />
+          <CarList />
         </Box>
       </Fade>
     </Container>

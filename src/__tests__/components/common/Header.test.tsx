@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import Header from "../common/Header";
+import Header from "../../../components/common/Header";
 import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 
 // Mock AddCarModal and ResetDataButton
-vi.mock("../car/AddCarModal", () => ({
+vi.mock("../../../components/car/AddCarModal", () => ({
   default: ({ open }: { open: boolean }) =>
     open ? <div data-testid="add-car-modal">Add Car Modal</div> : null,
 }));
-vi.mock("../common/ResetDataButton", () => ({
+vi.mock("../../../components/common/ResetDataButton", () => ({
   default: () => <button data-testid="reset-data-btn">Reset Data</button>,
 }));
 

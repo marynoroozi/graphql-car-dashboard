@@ -24,15 +24,13 @@ import {
 } from "@mui/icons-material";
 import { useForm, Controller, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
-import { GET_CARS } from "../../graphql/queries";
-import { ADD_CAR } from "../../graphql/mutations";
 import {
   carValidationSchema,
   type CarFormData,
 } from "../../types/car.validation";
 import { modalStyles } from "../../theme/componentStyles";
+import { useCarActions } from "../../contexts/CarContext";
 
 interface AddCarModalProps {
   open: boolean;
@@ -56,35 +54,20 @@ const defaultValues: CarFormData = {
 
 export default function AddCarModal({ open, onClose }: AddCarModalProps) {
   const [activeStep, setActiveStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { addCar } = useCarActions();
 
   const {
     control,
     handleSubmit,
     reset,
     trigger,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<CarFormData>({
     resolver: yupResolver(carValidationSchema) as any,
     defaultValues,
     mode: "onChange",
-  });
-
-  const [addCarMutation, { loading: mutationLoading }] = useMutation(ADD_CAR, {
-    refetchQueries: [{ query: GET_CARS }],
-    onCompleted: (data) => {
-      if (data.addCar.success) {
-        toast.success("🚗 Car added successfully!", {
-          duration: 3000,
-        });
-        handleClose();
-      }
-    },
-    onError: (error) => {
-      console.error("Error adding car:", error);
-      toast.error("❌ Failed to add car. Please try again.", {
-        duration: 4000,
-      });
-    },
   });
 
   const handleClose = () => {
@@ -124,6 +107,7 @@ export default function AddCarModal({ open, onClose }: AddCarModalProps) {
 
   const onSubmit: SubmitHandler<CarFormData> = async (data) => {
     const loadingToast = toast.loading("Adding your car...");
+    setIsSubmitting(true);
 
     try {
       const processedData = {
@@ -138,14 +122,21 @@ export default function AddCarModal({ open, onClose }: AddCarModalProps) {
         mileage: data.mileage || undefined,
       };
 
-      await addCarMutation({
-        variables: { input: processedData },
-      });
+      await addCar(processedData);
 
       toast.dismiss(loadingToast);
+      toast.success("🚗 Car added successfully!", {
+        duration: 3000,
+      });
+      handleClose();
     } catch (error) {
       toast.dismiss(loadingToast);
       console.error("Submit error:", error);
+      toast.error("❌ Failed to add car. Please try again.", {
+        duration: 4000,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -442,17 +433,13 @@ export default function AddCarModal({ open, onClose }: AddCarModalProps) {
             type="button"
             variant="contained"
             onClick={handleSubmit(onSubmit)}
-            disabled={isSubmitting || mutationLoading}
+            disabled={isSubmitting}
             startIcon={
-              isSubmitting || mutationLoading ? (
-                <CircularProgress size={20} />
-              ) : (
-                <AddIcon />
-              )
+              isSubmitting ? <CircularProgress size={20} /> : <AddIcon />
             }
             size="large"
           >
-            {isSubmitting || mutationLoading ? "Adding..." : "Add Car"}
+            {isSubmitting ? "Adding..." : "Add Car"}
           </Button>
         ) : (
           <Button
