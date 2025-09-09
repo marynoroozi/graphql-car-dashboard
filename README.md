@@ -170,6 +170,3 @@ No environment variables required - uses MSW for mock data.
 - GitHub: [@marynoroozi](https://github.com/marynoroozi)
 - LinkedIn: [mary noroozi](https://www.linkedin.com/in/maryam-noroozi-/)
 
----
-
-*Built with ❤️ for technical assessment - Enhanced with Context API and comprehensive testing*
